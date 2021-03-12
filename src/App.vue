@@ -1,18 +1,10 @@
 <template>
-  <v-app>
-    <v-main>
-      <Navigation />
-      <router-view></router-view>
-    </v-main>
-  </v-app>
+  <router-view></router-view>
 </template>
 
 <script>
-import Navigation from '@/components/NavigationDrawer.vue'
 export default {
   name: 'App',
-
-  components: {Navigation},
 
   data: () => ({
     //
@@ -28,5 +20,18 @@ export default {
 .no-gutters > .col,
 .no-gutters > [class*='col-'] {
   padding: 8px !important;
+}
+@-webkit-keyframes autofill {
+  0%,
+  100% {
+    color: #1e1e1e !important;
+    background: transparent;
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-animation-delay: 1s; /* Safari support - any positive time runs instantly */
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
 }
 </style>

@@ -1,55 +1,54 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import IDOPools from '@/views/IDOPools.vue'
-import IDOSwap from '@/views/IDOSwap.vue'
-import LookedPools from '@/views/LookedPools.vue'
-import PancakeSwap from '@/views/PancakeSwap.vue'
-import ProviderRegister from '@/views/ProviderRegister.vue'
+import Router from 'vue-router'
+import routes from './routes'
+import store from '@/store'
 
-Vue.use(VueRouter)
+const DEFAULT_PAGE_TITLE = 'LMS Manager'
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
-  {
-    path: '/IDOPools',
-    name: 'IDOPools',
-    component: IDOPools,
-  },
-  {
-    path: '/IDOSwap',
-    name: 'IDOSwap',
-    component: IDOSwap,
-  },
-  {
-    path: '/LookedPools',
-    name: 'LookedPools',
-    component: LookedPools,
-  },
-  {
-    path: '/PancakeSwap',
-    name: 'PancakeSwap',
-    component: PancakeSwap,
-  },
-  {
-    path: '/ProviderRegister',
-    name: 'ProviderRegister',
-    component: ProviderRegister,
-  },
-]
+Vue.use(Router)
 
-const router = new VueRouter({
-  routes,
+const router = new Router({
   mode: 'history',
+  base: process.env.BASE_URL,
+  scrollBehavior() {
+    return {x: 0, y: 0}
+  },
+  routes,
 })
+
+router.beforeEach((to, from, next) => {
+  next(_authGuard(to))
+})
+
+router.afterEach((to) => {
+  _setDocumentTitle(to.meta.title)
+})
+
+function _setDocumentTitle(title = DEFAULT_PAGE_TITLE) {
+  document.title = title
+}
+
+function _authGuard(to) {
+  if (!to.name) {
+    return '/home'
+  }
+
+  let hasAuthRule = false
+  let requriedAuth = false
+  const {isAuthenticated} = store.state.auth
+
+  for (let route of to.matched) {
+    if (!Object.prototype.hasOwnProperty.call(route.meta, 'auth')) {
+      continue
+    }
+    hasAuthRule = true
+    if (route.meta.auth) {
+      requriedAuth = true
+      break
+    }
+  }
+
+  return hasAuthRule ? (requriedAuth ? (isAuthenticated ? true : '/signin') : isAuthenticated && to.name !== 'resetPassword' ? '/home' : true) : true
+}
 
 export default router

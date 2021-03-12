@@ -1,0 +1,28 @@
+const _initConfirmData = {
+  state: false,
+  title: '',
+  text: '',
+  okText: 'Yes',
+  cancelText: 'No',
+  hideCancel: false,
+  hideOk: false,
+  done() {},
+  cancel() {},
+}
+
+export default {
+  confirmData: {..._initConfirmData},
+  confirm(dialogData = {}) {
+    Object.assign(this.confirmData, {
+      state: true,
+      ...dialogData,
+    })
+  },
+  cancel() {
+    this.confirmData.state = false
+    this.confirmData.cancel()
+    setTimeout(() => {
+      Object.assign(this.confirmData, _initConfirmData)
+    }, 500)
+  },
+}
