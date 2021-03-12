@@ -1,41 +1,32 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img alt="Vuetify Logo" class="shrink mr-2" contain src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png" transition="scale-transition" width="40" />
-        <v-img alt="Vuetify Name" class="shrink mt-1 hidden-sm-and-down" contain min-width="100" src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png" width="100" />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn text :to="`/PancakeSwap`">
-        Swap
-      </v-btn>
-      <v-btn text :to="`/LookedPools`">
-        IDO Pools
-      </v-btn>
-      <v-btn text :to="`IDOPools`">
-        Loocked Pools
-      </v-btn>
-      <v-btn text>
-        Settings
-      </v-btn>
-    </v-app-bar>
-
     <v-main>
+      <Navigation />
       <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import Navigation from '@/components/NavigationDrawer.vue'
 export default {
   name: 'App',
 
-  components: {},
+  components: {Navigation},
 
   data: () => ({
     //
   }),
 }
 </script>
+<style>
+.v-text-field .v-input__control,
+.v-text-field .v-input__slot,
+.v-text-field fieldset {
+  border-radius: 8px !important;
+}
+.no-gutters > .col,
+.no-gutters > [class*='col-'] {
+  padding: 8px !important;
+}
+</style>
