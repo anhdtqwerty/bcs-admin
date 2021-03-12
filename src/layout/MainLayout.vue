@@ -2,6 +2,9 @@
   <v-app>
     <plugin-confirm-dialog />
     <Navigation />
+    <v-app-bar app>
+      <v-toolbar-title class="display-1">Pools</v-toolbar-title>
+    </v-app-bar>
     <v-main class="d-print-none">
       <plugin-alert />
       <plugin-loading />

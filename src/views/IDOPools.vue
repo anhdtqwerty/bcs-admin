@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>IDO Pools</h1>
+    <v-tabs>
+      <v-tab>All Polls</v-tab>
+      <v-tab>New Pools</v-tab>
+    </v-tabs>
   </div>
 </template>
 

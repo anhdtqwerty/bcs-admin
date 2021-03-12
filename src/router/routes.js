@@ -8,7 +8,8 @@ import GuestLayout from '@/layout/GuestLayout'
 import MainLayout from '@/layout/MainLayout'
 import Page404 from '@/views/Page404'
 // ---------------- LAYOUT -------------------------------
-import Home from '../views/Home.vue'
+import Home from '@/views/Home.vue'
+import IDOPools from '@/views/IDOPools.vue'
 
 const routes = [
   {
@@ -84,6 +85,15 @@ const routes = [
         component: Home,
         meta: {
           title: 'Trang chủ',
+          auth: true,
+        },
+      },
+      {
+        path: 'fixed-pools',
+        name: 'Fixed Pools',
+        component: IDOPools,
+        meta: {
+          title: 'Fixed Pools',
           auth: true,
         },
       },

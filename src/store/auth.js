@@ -22,8 +22,8 @@ export default {
         console.error('signIn', error)
       }
     },
-    signOut() {
-      this.reset()
+    signOut({commit}) {
+      commit('reset')
       router.push('signIn')
     },
     setRole({commit}, role) {
@@ -66,6 +66,13 @@ export default {
         state.isAuthenticated = false
         state.role = null
       }
+    },
+    reset(state) {
+      state.jwt = null
+      state.user = null
+      state.profile = {}
+      state.role = {}
+      state.isAuthenticated = false
     },
     setRole(state, role) {
       state.role = role
