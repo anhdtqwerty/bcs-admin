@@ -1,18 +1,24 @@
 <template>
   <div>
     <span class="label theme--dark v-label">{{ $attrs.label }}</span>
-    <v-text-field v-on:input="data = $event.target.value" hide-details class="text-field" label="" v-bind="$attrs" solo dense></v-text-field>
+    <v-text-field @input="handleInput" v-model="content" hide-details class="text-field" label="" v-bind="$attrs" solo dense></v-text-field>
   </div>
 </template>
 
 <script>
 export default {
+  prop: ['value'],
   data() {
     return {
-      data: '',
+      content: this.value,
     }
   },
   components: {},
+  methods: {
+    handleInput() {
+      this.$emit('input', this.content)
+    },
+  },
 }
 </script>
 <style scoped>
