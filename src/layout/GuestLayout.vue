@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+import {mapGetters} from 'vuex'
 import PluginConfirmDialog from '@/components/plugin/PluginConfirmDialog'
 import PluginAlert from '@/components/plugin/PluginAlert'
 import PluginLoading from '@/components/plugin/PluginLoading'
@@ -32,7 +32,6 @@ export default {
   },
   computed: {
     ...mapGetters('auth', ['user', 'profile', 'isAuthenticated']),
-    ...mapGetters('app', ['users', 'department', 'roles']),
     simpleLayout() {
       const {meta = {}, matched = []} = this.$route
       return meta.auth === false || matched.some((route) => route.meta.auth === false)
@@ -41,18 +40,6 @@ export default {
       return true
     },
   },
-  methods: {
-    ...mapActions('app', ['fetchRoles', 'fetchStaffs', 'setDepartment', 'fetchDepartment', 'setPolicies']),
-    ...mapActions('course', ['fetchCourses']),
-    ...mapActions('auth', ['fetchProfile', 'fetchTeacher', 'setRole']),
-    toggleDrawer(...state) {
-      if (!this.isDesktop) {
-        this.drawer = state.length ? !!state[0] : !this.drawer
-      } else {
-        this.mini = state.length ? !state[0] : !this.mini
-        this.drawer = true
-      }
-    },
-  },
+  methods: {},
 }
 </script>

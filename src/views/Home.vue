@@ -2,7 +2,7 @@
   <div class="home" style="max-width: 600px; margin: 0 auto">
     <p class="headline pa-4 mt-6">Create New Fixed Pool</p>
     <FixedPoolNewForm ref="form" />
-    <v-btn class="ma-4 mt-0" @click="submit" color="#FFC107" style="color: black; border-radius: 16px !important">Create Pool</v-btn>
+    <v-btn class="ma-4 mt-0" @click="submit" color="primary" style="color: black; border-radius: 16px !important">Create Pool</v-btn>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ const Web3 = require('web3')
 let web3 = {}
 let address = '0x6De563767862133854E4AAdb29684fA7Ee5Bae74'
 import FixedPoolNewForm from '@/components/FixedPoolNewForm.vue'
+import {mapActions} from 'vuex'
 export default {
   name: 'Home',
   data() {
@@ -31,9 +32,10 @@ export default {
     console.log(balance)
   },
   methods: {
+    ...mapActions('fixedPools', ['createPool']),
     async submit() {
-      console.log('submit')
-      console.log(this.$refs.form.getData())
+      await this.createPool(this.$refs.form.getData())
+      this.$alert.success('create Pool Completed')
     },
     async createContract() {},
   },

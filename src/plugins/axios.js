@@ -9,20 +9,11 @@ axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT
 export const axiosPlugin = (store) => {
   let jwtTokenCached
   // eslint-disable-next-line no-unused-vars
-  let departmentId
 
   store.watch(
     (state) => state.auth.jwt,
     (newValue) => {
       jwtTokenCached = newValue
-    },
-    {immediate: true}
-  )
-
-  store.watch(
-    (state) => state.app.department,
-    (newValue) => {
-      departmentId = newValue ? newValue.id : ''
     },
     {immediate: true}
   )
@@ -49,7 +40,6 @@ export const axiosPlugin = (store) => {
       return Promise.reject(error)
     }
   )
-
   axios.interceptors.response.use(
     (res) => {
       if (res.config && res.config.requestId) {
@@ -59,7 +49,6 @@ export const axiosPlugin = (store) => {
         alert.success(res.config.successMessage)
       }
       loading.hide()
-      console.log(res)
       return res.data
     },
     (err) => {

@@ -9,6 +9,15 @@
     <v-divider></v-divider>
 
     <v-list dense>
+      <v-list-item link to="/home">
+        <v-list-item-icon>
+          <v-icon>mdi-view-dashboard</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>New Pools</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-list-item link to="/fixed-pools">
         <v-list-item-icon>
           <v-icon>mdi-view-dashboard</v-icon>

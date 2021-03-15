@@ -29,9 +29,7 @@ export default {
     setRole({commit}, role) {
       commit('setRole', role)
     },
-    async fetchProfile({commit}, query) {
-      commit('setProfile', await api.Staff.fetch(query))
-    },
+    async fetchProfile() {},
     async fetchTeacher({commit}, query) {
       commit('setProfile', await Teacher.fetch(query))
     },

@@ -35,7 +35,6 @@ export default {
   },
   computed: {
     ...mapGetters('auth', ['user', 'profile', 'isAuthenticated']),
-    ...mapGetters('app', ['users', 'department', 'roles']),
     simpleLayout() {
       const {meta = {}, matched = []} = this.$route
       return meta.auth === false || matched.some((route) => route.meta.auth === false)

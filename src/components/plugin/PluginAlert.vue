@@ -1,55 +1,48 @@
 <template>
-  <v-snackbar
-    :value="alert.show"
-    @input="close"
-    :color="color"
-    :timeout="timeout"
-    top
-    class="plugin__alert"
-  >
-    <v-icon class="mr-3">{{icon}}</v-icon>
-    {{alert.message}}
+  <v-snackbar :value="alert.show" @input="close" :color="color" :timeout="timeout" top class="plugin__alert">
+    <v-icon class="mr-3">{{ icon }}</v-icon>
+    {{ alert.message }}
     <v-btn icon @click="close">
-      <v-icon>close</v-icon>
+      <v-icon>mdi-close</v-icon>
     </v-btn>
   </v-snackbar>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      alert: this.$alert.alertData
+      alert: this.$alert.alertData,
     }
   },
   computed: {
-    icon () {
+    icon() {
       return {
-        error: 'warning',
-        success: 'check_circle',
-        warning: 'warning'
+        error: 'mdi-alert-outline',
+        success: 'mdi-check',
+        warning: 'mdi-alert-octagon',
       }[this.alert.type]
     },
-    color () {
+    color() {
       return {
         error: 'error',
         success: 'success',
-        warning: 'yellow darken-2'
+        warning: 'yellow darken-2',
       }[this.alert.type]
     },
-    timeout () {
+    timeout() {
       return (
         {
-          error: 8000
+          error: 8000,
         }[this.$alert.type] || 5000
       )
-    }
+    },
   },
   methods: {
-    close () {
+    close() {
       this.$alert.close()
-    }
-  }
+    },
+  },
 }
 </script>
 
