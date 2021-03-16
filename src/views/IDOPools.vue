@@ -4,14 +4,19 @@
       <v-tab>All Polls</v-tab>
       <v-tab>New Pools</v-tab>
     </v-tabs>
-    <v-data-table :headers="headers" :items="pools"></v-data-table>
+    <v-data-table :headers="headers" :items="pools">
+      <template v-slot:item.teachers="{item}">
+        <user-item :teacher="item.teachers[0]" :to="'teacher/' + item.id"></user-item>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
 <script>
 import {mapActions, mapState} from 'vuex'
+import PoolNameImage from 'src/components/PoolNameImage.vue'
 export default {
-  components: {},
+  components: {PoolNameImage},
   async created() {
     await this.fetchPools()
   },

@@ -1,7 +1,6 @@
 import alert from '@/plugins/alert'
 import router from '@/router'
 import api from '@/plugins/api'
-import {Teacher, Student} from '@/plugins/api'
 import _ from 'lodash'
 export default {
   namespaced: true,
@@ -30,12 +29,6 @@ export default {
       commit('setRole', role)
     },
     async fetchProfile() {},
-    async fetchTeacher({commit}, query) {
-      commit('setProfile', await Teacher.fetch(query))
-    },
-    async fetchStudent({commit}, query) {
-      commit('setProfile', await Student.fetch(query))
-    },
     signUp() {},
     async forgotPassword(email) {
       await api.Auth.forgotPassword(email)
@@ -44,13 +37,7 @@ export default {
     async resetPassword({commit}, {code, password, passwordConfirmation}) {
       const {user, jwt} = await api.Auth.resetPassword(code, password, passwordConfirmation)
       commit('setUser', {user, jwt})
-      if (user.role.type === 'teacher') {
-        router.push('/teacher-dashboard')
-      } else if (user.role.type === 'student') {
-        router.push('/student-dashboard')
-      } else {
-        router.push('/bill')
-      }
+      router.push('/home')
     },
   },
   mutations: {

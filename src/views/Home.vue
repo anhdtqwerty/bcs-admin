@@ -2,12 +2,14 @@
   <div class="home" style="max-width: 600px; margin: 0 auto">
     <p class="headline pa-4 mt-6">Create New Fixed Pool</p>
     <FixedPoolNewForm ref="form" />
-    <v-btn class="ma-4 mt-0" @click="submit" color="primary" style="color: black; border-radius: 16px !important">Create Pool</v-btn>
+    <v-btn class="ma-4 mt-0" :loading="loading" @click="submit" color="primary" style="color: black; border-radius: 16px !important">Create Pool</v-btn>
   </div>
 </template>
 
 <script>
 const Web3 = require('web3')
+import router from '@/router'
+
 let web3 = {}
 let address = '0x6De563767862133854E4AAdb29684fA7Ee5Bae74'
 import FixedPoolNewForm from '@/components/FixedPoolNewForm.vue'
@@ -18,6 +20,7 @@ export default {
     return {
       account: {},
       ethereum: {},
+      loading: false,
     }
   },
   components: {FixedPoolNewForm},
@@ -34,8 +37,14 @@ export default {
   methods: {
     ...mapActions('fixedPools', ['createPool']),
     async submit() {
-      await this.createPool(this.$refs.form.getData())
+      this.loading = true
+      const data = this.$refs.form.getData()
+      console.log(data)
+      if (!data) return
+      await this.createPool(data)
       this.$alert.success('create Pool Completed')
+      router.push('/fixed-pools')
+      this.loading = false
     },
     async createContract() {},
   },

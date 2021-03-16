@@ -1,51 +1,48 @@
 <template>
-  <v-form>
+  <v-form ref="form">
     <v-row no-gutters>
       <v-col cols="12" sm="6">
-        <BaseTextField v-model="name" label="Poll Name*"></BaseTextField>
-        <BaseTextField v-model="tokenName" solo label="Token Name*"></BaseTextField>
-        <BaseTextField v-model="tokenAddress" label="Address Token*"></BaseTextField>
+        <BaseTextField v-model="name" label="Poll Name*" :rules="[$rules.required, $rules.minLength(4), $rules.min]"></BaseTextField>
+        <BaseTextField v-model="tokenName" solo label="Token Name*" :rules="[$rules.required, $rules.minLength(3), $rules.min]"></BaseTextField>
+        <BaseTextField v-model="tokenAddress" label="Address Token*" :rules="[$rules.required, $rules.minLength(3), $rules.min]"></BaseTextField>
       </v-col>
       <v-col cols="12" sm="6">
         <BaseAvatarForm v-model="avatar" :pool="{}" solo label="Avatar Url*" @change="onAvatarUploaded"></BaseAvatarForm>
       </v-col>
-      <v-col cols="12" sm="6"> </v-col>
-      <v-col cols="12" sm="6"> </v-col>
-
       <v-col cols="12" sm="12">
-        <BaseTextField v-model="totalSupply" solo label="Total Raise*"></BaseTextField>
+        <BaseTextField v-model="totalRaise" solo label="Total Raise*" :rules="[$rules.required]"></BaseTextField>
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12" sm="6">
-        <BaseTextField v-model="tokenDistribution" solo label="Token Distribution*"></BaseTextField>
+        <BaseTextField v-model="tokenDistribution" solo label="Token Distribution*" :rules="[$rules.required]"></BaseTextField>
       </v-col>
 
       <v-col cols="12" sm="6">
-        <BaseTextField v-model="ratio" solo label="Ratio*"></BaseTextField>
+        <BaseTextField v-model="ratio" solo label="Ratio*" :rules="[$rules.required]"></BaseTextField>
       </v-col>
 
       <v-col cols="12" sm="6">
-        <BaseTextField v-model="amount" solo label="Amount*"></BaseTextField>
+        <BaseTextField v-model="amount" type="number" solo label="Amount*" :rules="[$rules.required]"></BaseTextField>
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12" sm="6">
-        <BaseTextField v-model="minAllocation" solo label="Min. Allocation*"></BaseTextField>
+        <BaseTextField v-model="minAllocation" type="number" solo label="Min. Allocation*" :rules="[$rules.required]"></BaseTextField>
       </v-col>
 
       <v-col cols="12" sm="6">
-        <BaseTextField v-model="maxAllocation" solo label="Max. Allocation*"></BaseTextField>
+        <BaseTextField v-model="maxAllocation" type="number" solo label="Max. Allocation*" :rules="[$rules.required]"></BaseTextField>
       </v-col>
 
       <v-col cols="12" sm="4">
-        <BaseDateImput v-model="date" type="normal" solo label="Crowdsale Time"></BaseDateImput>
+        <BaseDateImput v-model="date" type="normal" solo label="Crowdsale Time" :rules="[$rules.required]"></BaseDateImput>
       </v-col>
       <v-col cols="12" sm="4">
-        <BaseTimeInput v-model="time" solo label="(24h format)"></BaseTimeInput>
+        <BaseTimeInput v-model="time" solo label="(24h format)" :rules="[$rules.required]"></BaseTimeInput>
       </v-col>
       <v-col cols="12" sm="4">
-        <BaseTextField type="number" v-model="duration" solo label="Duration (minutes)"></BaseTextField>
+        <BaseTextField type="number" v-model="duration" solo label="Duration (minutes)" :rules="[$rules.required]"></BaseTextField>
       </v-col>
       <v-col cols="12" sm="12">
         <v-btn :outlined="!isPrivate" :color="!isPrivate ? '#FFC107' : ''" class="mr-4" @click="isPrivate = false" dark style="border-radius: 16px !important">Public</v-btn>
@@ -63,6 +60,7 @@ import BaseAvatarForm from '@/base/BaseAvatarForm.vue'
 import BaseDateImput from '@/base/BaseDateImput.vue'
 import BaseTimeInput from '@/base/BaseTimeInput.vue'
 import moment from 'moment'
+
 export default {
   name: 'Home',
   data() {
@@ -94,7 +92,14 @@ export default {
     onAvatarUploaded(avatar) {
       this.avatar = avatar ? avatar.id : null
     },
+    validate() {
+      return this.$refs.form.validate()
+    },
+    reset() {
+      this.$refs.form.reset()
+    },
     getData() {
+      if (!this.validate()) return null
       return {
         file: this.avatar,
         tokenName: this.tokenName,
@@ -108,7 +113,9 @@ export default {
         minAllocation: this.minAllocation,
         maxAllocation: this.maxAllocation,
         startDate: moment(`${this.date} ${this.time}`, 'DD/MM/YYYY HH:mm').toISOString(),
-        endDate: moment(`${this.date} ${this.time}`, 'DD/MM/YYYY HH:mm').toISOString(),
+        endDate: moment(`${this.date} ${this.time}`, 'DD/MM/YYYY HH:mm')
+          .add(this.duration, 'minutes')
+          .toISOString(),
         name: this.name,
         accessType: this.isPrivate ? 'private' : 'public',
         status: 'under-approve',

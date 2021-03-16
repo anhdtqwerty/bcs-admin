@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="label theme--dark v-label">{{ $attrs.label }}</span>
-    <v-text-field @input="handleInput" v-model="content" hide-details class="text-field" label="" v-bind="$attrs" solo dense></v-text-field>
+    <v-text-field @input="handleInput" v-model="content" class="text-field" label="" v-bind="$attrs" solo dense></v-text-field>
   </div>
 </template>
 
