@@ -13,13 +13,18 @@ export default new Vuetify({
     },
     themes: {
       light: {
-        primary: '#FFC107',
+        primary: '#2196F3',
         secondary: colors.grey.darken1,
         accent: colors.shades.black,
         error: colors.red.accent3,
       },
       dark: {
-        primary: '#FFC107',
+        primary: '#F5BA03',
+        accent: '#2196F3',
+        red: '#E6344A',
+        yellow: '#F5BA03',
+        green: '#1DD692',
+        success: '#1DD692',
       },
     },
   },

@@ -1,14 +1,9 @@
 <template>
   <div class="d-flex flex-row align-center pa-1" style="flex-wrap: wrap" :key="pool.id" @click="$emit('change', pool)">
-    <div class="image-wrapper mr-5 mb-3">
+    <div class="ma-2 d-flex align-center justify-center">
       <img :src="file" alt="" />
     </div>
-    <div style="font-size: 18px; color: #000000">
-      <router-link v-if="link" :to="'/pool/' + pool.id">
-        <div style="white-space: nowrap">{{ pool.name }}</div>
-      </router-link>
-      <div style="white-space: nowrap" v-else>{{ pool.name }}</div>
-    </div>
+    <div style="white-space: nowrap">{{ pool.name }}</div>
   </div>
 </template>
 <script>
@@ -24,23 +19,20 @@ export default {
   },
   computed: {
     file() {
-      return _.get(this.pool, 'file.url', '/default-file.png')
+      return this.$baseUrl + _.get(this.pool, 'file.url', '/default-avatar.png')
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.image-wrapper {
-  width: 140px;
-  min-width: 140px;
-  height: 140px;
+img {
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  img {
-    max-width: 100%;
-    max-height: 100%;
-  }
+  border-radius: 50%;
 }
 </style>

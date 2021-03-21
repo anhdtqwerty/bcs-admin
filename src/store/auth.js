@@ -14,7 +14,7 @@ export default {
   actions: {
     async signIn({commit}, {identifier = '', password = ''} = {}) {
       try {
-        const {data} = await api.Auth.create({identifier, password})
+        const data = await api.Auth.create({identifier, password})
         commit('setUser', {user: data.user, jwt: data.jwt})
         router.push('/home')
       } catch (error) {
